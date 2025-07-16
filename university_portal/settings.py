@@ -2,12 +2,7 @@ import os
 from pathlib import Path
 import dj_database_url  # Make sure this import is at the top
 
-# Security settings for production
-if not DEBUG:
-    SECURE_SSL_REDIRECT = True
-    SESSION_COOKIE_SECURE = True
-    CSRF_COOKIE_SECURE = True
-    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -16,6 +11,13 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-q&kpp6_*xijnzp)^d)2$c
 
 DEBUG = os.environ.get('DEBUG', '1') == '1'  # Simplified debug check
 
+# Security settings for production
+if not DEBUG:
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    
 ALLOWED_HOSTS = ["university-portal.onrender.com", "localhost", "127.0.0.1"]
 
 CSRF_TRUSTED_ORIGINS = ['https://university-portal.onrender.com']
