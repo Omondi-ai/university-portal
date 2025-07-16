@@ -1,13 +1,21 @@
 #!/bin/bash
 set -e
 
-# Run migrations
+# Wait for database to be ready (only needed if using Docker Compose)
+# while ! nc -z $DB_HOST $DB_PORT; do
+#   echo "Waiting for database..."
+#   sleep 2
+# done
+
+# Apply migrations
 python manage.py migrate
 
-# Create superuser (only first deploy)
+# Create superuser if enabled
 if [ "$CREATE_SUPERUSER" = "true" ]; then
     python manage.py createsuperuser --noinput || true
 fi
 
-# Start server
+# Collect static files
+python manage.py collectstatic --noinput
+
 exec "$@"
