@@ -1,23 +1,26 @@
 import os
 from pathlib import Path
 import dj_database_url
+import logging
+
+# Initialize logging
+logging.basicConfig(level=logging.INFO)
 
 # Build paths
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Security settings
-SECRET_KEY = os.environ['SECRET_KEY']  # Render will generate this
+SECRET_KEY = os.environ['SECRET_KEY']
 DEBUG = os.environ.get('DEBUG', '0') == '1'
 
-# Dynamic allowed hosts
+# Dynamic host configuration
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 ALLOWED_HOSTS = []
 if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
-if DEBUG:
-    ALLOWED_HOSTS.extend(['localhost', '127.0.0.1'])
+ALLOWED_HOSTS.extend(['localhost', '127.0.0.1'])
 
-CSRF_TRUSTED_ORIGINS = [f'https://{host}' for host in ALLOWED_HOSTS if host != 'localhost']
+CSRF_TRUSTED_ORIGINS = [f'https://{host}' for host in ALLOWED_HOSTS if not host.startswith('127.')]
 
 # Security headers
 if not DEBUG:
@@ -82,6 +85,12 @@ DATABASES = {
         conn_health_checks=True,
     )
 }
+DATABASES['default']['OPTIONS'] = {
+    'connect_timeout': 5,
+    'keepalives': 1,
+    'keepalives_idle': 30,
+    'keepalives_interval': 10,
+}
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -106,7 +115,7 @@ USE_I18N = True
 USE_TZ = True
 
 # Static files
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
