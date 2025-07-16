@@ -7,7 +7,7 @@ services:
     envVars:
       - key: DATABASE_URL
         fromDatabase:
-          name: university_portal
+          name: university-portal-db  # Changed to match database name
           property: connectionString
       - key: SECRET_KEY
         generateValue: true
@@ -17,4 +17,12 @@ services:
         value: "3.11.9"
       - key: DJANGO_SETTINGS_MODULE
         value: "university_portal.settings"
+      - key: ALLOWED_HOSTS
+        value: "university-portal.onrender.com localhost 127.0.0.1"
+    healthCheckPath: "/"
     plan: free
+
+databases:
+  - name: university-portal-db  # Explicit database name
+    plan: free
+    pgVersion: "16"
