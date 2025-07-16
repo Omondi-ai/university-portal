@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: university-portal
+    runtime: docker
+    build:
+      dockerfile: Dockerfile
+    env: docker
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: university-portal-db
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: "False"
+    healthCheckPath: /health/
