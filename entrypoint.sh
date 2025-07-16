@@ -1,12 +1,6 @@
 #!/bin/bash
 set -e
 
-# Wait for database to be ready (only needed if using Docker Compose)
-# while ! nc -z $DB_HOST $DB_PORT; do
-#   echo "Waiting for database..."
-#   sleep 2
-# done
-
 # Apply migrations
 python manage.py migrate
 
