@@ -7,7 +7,7 @@ services:
     envVars:
       - key: DATABASE_URL
         fromDatabase:
-          name: university-portal-db  # Changed to match database name
+          name: university-portal-db  # Changed to match the database name below
           property: connectionString
       - key: SECRET_KEY
         generateValue: true
@@ -15,14 +15,9 @@ services:
         value: "0"
       - key: PYTHON_VERSION
         value: "3.11.9"
-      - key: DJANGO_SETTINGS_MODULE
-        value: "university_portal.settings"
-      - key: ALLOWED_HOSTS
-        value: "university-portal.onrender.com localhost 127.0.0.1"
-    healthCheckPath: "/"
     plan: free
 
 databases:
-  - name: university-portal-db  # Explicit database name
+  - name: university-portal-db  # This creates the database first
     plan: free
-    pgVersion: "16"
+    postgresVersion: "16"
