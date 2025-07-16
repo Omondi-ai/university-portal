@@ -1,0 +1,319 @@
+[
+{
+  "model": "sessions.session",
+  "pk": "bjflqyrm1k2mxnkd1ukgbiwvvn0fmnkf",
+  "fields": {
+    "session_data": ".eJxVjEEOwiAQRe_C2hBwYACX7nsGAgMjVdMmpV0Z765NutDtf-_9l4hpW1vcel3iWMRFgDj9bjnRo047KPc03WZJ87QuY5a7Ig_a5TCX-rwe7t9BS719a2ttAHKkvQGH6JBBq2IyoipkNXuTORAm5wODPZM3njNaAxygVlbi_QG5vDc8:1uWf6i:-eh4X_Hcq3TzzfB-VZZ3tvBZE64EV-b8v480a1BROfw",
+    "expire_date": "2025-07-15T17:49:24.203Z"
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$AYmXvzno5BOr2loPsEQgEH$c2k7Ih138Osi3SkWLA8aI9LUKUBlQ/bCKAuYfbocyoQ=",
+    "last_login": "2025-07-01T17:31:40.386Z",
+    "is_superuser": false,
+    "username": "orang",
+    "first_name": "",
+    "last_name": "",
+    "email": "orangotang@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-07-01T17:31:35.935Z",
+    "role": "PR",
+    "profile_picture": "profile_pics/ChatGPT_Image_Jun_26_2025_10_03_54_AM.png",
+    "department": null,
+    "student_id": null,
+    "phone_number": "",
+    "is_online": false,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 2,
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$tDvyWsSgWTyRdKVVHxqMnu$mhuwHFl9CaCCiI782ES1ANVLPMtF8mNjvIedgfYLZ28=",
+    "last_login": "2025-07-01T17:37:49.588Z",
+    "is_superuser": true,
+    "username": "Tycoon",
+    "first_name": "",
+    "last_name": "",
+    "email": "odhiamboderrickomondi020@gmail.com",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2025-07-01T17:35:46.857Z",
+    "role": "VI",
+    "profile_picture": "",
+    "department": null,
+    "student_id": null,
+    "phone_number": "",
+    "is_online": false,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 3,
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$avlI6KNRZ3jqM0mJLqYRdT$yHUC+VT8R94yEiArjbeLPbxlNM8vbu/7y7v3TWPkTgE=",
+    "last_login": "2025-07-01T17:49:23.981Z",
+    "is_superuser": false,
+    "username": "Profesa",
+    "first_name": "",
+    "last_name": "",
+    "email": "odhiamboderrick01@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-07-01T17:39:27.693Z",
+    "role": "PR",
+    "profile_picture": "",
+    "department": 1,
+    "student_id": null,
+    "phone_number": "",
+    "is_online": true,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 4,
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$COgtyaq4uiVCw5wlqhGm4r$schNOpdWLuPqfEwXFPp6op3uleMwxjURnlLNiS+yPrE=",
+    "last_login": "2025-07-01T17:45:26.002Z",
+    "is_superuser": false,
+    "username": "DonCarlos",
+    "first_name": "",
+    "last_name": "",
+    "email": "harvestime@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-07-01T17:45:24.101Z",
+    "role": "PR",
+    "profile_picture": "profile_pics/Life360_Experience__Logo_Icon.png",
+    "department": 2,
+    "student_id": null,
+    "phone_number": "",
+    "is_online": false,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "departments.department",
+  "pk": 1,
+  "fields": {
+    "name": "Hesabu",
+    "code": "hesabu01",
+    "description": "Hesabu , almaarufu mathematics ni somo zuri sana.",
+    "logo": "department_logos/travelling.jpeg",
+    "banner_image": "department_banners/download_6_y0DvpuL.jpeg",
+    "theme_color": "#007bff"
+  }
+},
+{
+  "model": "departments.department",
+  "pk": 2,
+  "fields": {
+    "name": "Art",
+    "code": "art002",
+    "description": "Here we draw, we sculpt, we act and we sing.",
+    "logo": "department_logos/Bubbly_Tots_Learning_Center.jpeg",
+    "banner_image": "department_banners/Global_education_concept_vector_image_on_VectorStock.jpg",
+    "theme_color": "#007bff"
+  }
+},
+{
+  "model": "departments.course",
+  "pk": 1,
+  "fields": {
+    "department": 1,
+    "code": "math01",
+    "name": "Calculus",
+    "description": "Here we diffferentiate before we integrate",
+    "syllabus": "syllabus/Green_and_Dark_Green_Simple_Forest_Of_The_Future_Presentation.pdf"
+  }
+},
+{
+  "model": "departments.course",
+  "pk": 2,
+  "fields": {
+    "department": 2,
+    "code": "Drawing01",
+    "name": "Drawing",
+    "description": "Njoo tuchore jameni.",
+    "syllabus": ""
+  }
+},
+{
+  "model": "posts.post",
+  "pk": 1,
+  "fields": {
+    "author": [
+      "Profesa"
+    ],
+    "title": "The Peoples food",
+    "content": "I love eating omena and rice.",
+    "created_at": "2025-07-01T17:59:23.134Z",
+    "updated_at": "2025-07-01T17:59:23.134Z",
+    "target_type": "GE",
+    "department": null,
+    "course": null,
+    "professor": null,
+    "file": "post_files/download_4.jpeg",
+    "image": "post_images/7_Best_Dolomites_Hiking_Trails_You_Can_Do_In_A_Day.jpeg"
+  }
+},
+{
+  "model": "messaging.thread",
+  "pk": 1,
+  "fields": {
+    "created": "2025-07-01T17:45:53.729Z",
+    "updated": "2025-07-01T17:45:53.729Z",
+    "participants": [
+      [
+        "Profesa"
+      ],
+      [
+        "DonCarlos"
+      ]
+    ]
+  }
+},
+{
+  "model": "messaging.message",
+  "pk": 1,
+  "fields": {
+    "thread": 1,
+    "sender": [
+      "DonCarlos"
+    ],
+    "text": "Hello profesa , you wanna sing",
+    "attachment": "",
+    "created": "2025-07-01T17:45:54.096Z",
+    "is_read": true
+  }
+},
+{
+  "model": "messaging.message",
+  "pk": 2,
+  "fields": {
+    "thread": 1,
+    "sender": [
+      "DonCarlos"
+    ],
+    "text": "",
+    "attachment": "message_attachments/ChatGPT_Image_Jun_26_2025_10_03_54_AM.png",
+    "created": "2025-07-01T17:49:04.622Z",
+    "is_read": true
+  }
+},
+{
+  "model": "messaging.message",
+  "pk": 3,
+  "fields": {
+    "thread": 1,
+    "sender": [
+      "Profesa"
+    ],
+    "text": "Rastaman",
+    "attachment": "message_attachments/BloomV1_C-4.pptx",
+    "created": "2025-07-01T17:57:52.882Z",
+    "is_read": false
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 1,
+  "fields": {
+    "action_time": "2025-07-01T17:39:20.120Z",
+    "user": [
+      "Tycoon"
+    ],
+    "content_type": [
+      "departments",
+      "department"
+    ],
+    "object_id": "1",
+    "object_repr": "Hesabu",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 2,
+  "fields": {
+    "action_time": "2025-07-01T17:39:29.441Z",
+    "user": [
+      "Tycoon"
+    ],
+    "content_type": [
+      "accounts",
+      "user"
+    ],
+    "object_id": "3",
+    "object_repr": "Profesa",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 3,
+  "fields": {
+    "action_time": "2025-07-01T17:41:03.644Z",
+    "user": [
+      "Tycoon"
+    ],
+    "content_type": [
+      "departments",
+      "department"
+    ],
+    "object_id": "2",
+    "object_repr": "Art",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 4,
+  "fields": {
+    "action_time": "2025-07-01T17:42:00.256Z",
+    "user": [
+      "Tycoon"
+    ],
+    "content_type": [
+      "departments",
+      "course"
+    ],
+    "object_id": "1",
+    "object_repr": "math01 - Calculus",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 5,
+  "fields": {
+    "action_time": "2025-07-01T17:43:33.764Z",
+    "user": [
+      "Tycoon"
+    ],
+    "content_type": [
+      "departments",
+      "course"
+    ],
+    "object_id": "2",
+    "object_repr": "Drawing01 - Drawing",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+}
+]

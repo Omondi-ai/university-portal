@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h2>Profile</h2>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4 text-center">
+                        {% if user.profile_picture %}
+                            <img src="{{ user.profile_picture.url }}" alt="Profile Picture" class="img-thumbnail mb-3" width="200">
+                        {% else %}
+                            <i class="bi bi-person-circle fs-1 mb-3"></i>
+                        {% endif %}
+                        <h4>{{ user.username }}</h4>
+                        <p class="text-muted">
+                            {% if user.role == 'PR' %}
+                                Professor
+                            {% elif user.role == 'ST' %}
+                                Student
+                            {% else %}
+                                Visitor
+                            {% endif %}
+                        </p>
+                        
+                        <!-- Password Change Section -->
+                        <div class="mt-4">
+                            <a href="{% url 'password_change' %}" class="btn btn-warning btn-sm">
+                                <i class="bi bi-key-fill"></i> Change Password
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-8">
+                        <form method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {{ form|crispy }}
+                            <div class="d-flex justify-content-between mt-4">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="bi bi-save"></i> Update Profile
+                                </button>
+                                <a href="{% url 'home' %}" class="btn btn-outline-secondary">
+                                    <i class="bi bi-arrow-left"></i> Back to Home
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

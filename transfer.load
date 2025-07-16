@@ -1,0 +1,8 @@
+LOAD DATABASE
+    FROM 'C:/Users/HP 820/Desktop/Ivack/university_portal/db_backup.sqlite3'
+    INTO postgresql://university_user:yourpassword@localhost/university_portal
+    
+WITH include drop, create tables, create indexes, reset sequences,
+     batch rows = 1000
+    
+SET work_mem to '64MB', maintenance_work_mem to '512 MB';

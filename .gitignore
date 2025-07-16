@@ -1,0 +1,53 @@
+# Django
+*.log
+*.pot
+*.pyc
+__pycache__/
+local_settings.py
+db.sqlite3
+media/
+
+# Environment files
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Static files
+/staticfiles/
+
+# Docker
+docker-compose.override.yml
+
+# Database
+*.dump
+*.backup
+
+# OS generated
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Node/npm
+node_modules/
+npm-debug.log*
+
+# Coverage
+.coverage
+htmlcov/
+
+# Celery
+celerybeat-schedule
