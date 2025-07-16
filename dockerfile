@@ -36,5 +36,10 @@ RUN python manage.py collectstatic --noinput
 # Expose the application port
 EXPOSE 8000
 
+# Add this before CMD
+COPY build.sh /
+RUN chmod +x /build.sh
+ENTRYPOINT ["/build.sh"]
+
 # Run application with Gunicorn
 CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--workers", "4", "university_portal.wsgi:application"]
