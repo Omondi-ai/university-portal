@@ -17,12 +17,4 @@ services:
         value: "3.11.9"
       - key: DJANGO_SETTINGS_MODULE
         value: "university_portal.settings"
-      - key: ALLOWED_HOSTS
-        value: "university-portal.onrender.com localhost 127.0.0.1"
-    healthCheckPath: "/"
-    plan: free
-    autoDeploy: yes
-
-databases:
-  - name: university_portal
     plan: free
