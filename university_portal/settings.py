@@ -2,6 +2,8 @@ import os
 from pathlib import Path
 import dj_database_url
 import logging
+from dotenv import load_dotenv
+load_dotenv()
 
 # Initialize logging
 logging.basicConfig(level=logging.INFO)
