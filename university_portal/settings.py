@@ -32,11 +32,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # Your apps
     'accounts',
     'departments',
     'posts',
     'messaging',
     'results',
+
+    # Third-party
     'crispy_forms',
     'crispy_bootstrap5',
     'django_filters',
@@ -75,6 +79,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'university_portal.wsgi.application'
 
+# Database
 DATABASES = {
     'default': dj_database_url.config(
         conn_max_age=600,
@@ -88,6 +93,7 @@ DATABASES['default']['OPTIONS'] = {
     'keepalives_interval': 10,
 }
 
+# Password validation
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
@@ -95,6 +101,7 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
+# Internationalization
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
@@ -102,11 +109,11 @@ USE_TZ = True
 
 # Static files
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [BASE_DIR / 'static']
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-# Cloudinary for media
+# Media (Cloudinary for prod, fallback local for dev)
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': 'duve9arn4',
     'API_KEY': '947477723725949',
@@ -114,11 +121,15 @@ CLOUDINARY_STORAGE = {
 }
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
+# Custom user model and auth
 AUTH_USER_MODEL = 'accounts.User'
 LOGIN_REDIRECT_URL = 'home'
 LOGIN_URL = 'login'
 
+# Crispy forms
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 
