@@ -2,10 +2,12 @@ services:
   - type: web
     name: university-portal
     runtime: python
-    buildCommand: "./build.sh"
+    buildCommand: |
+      ./build.sh
+      python manage.py collectstatic --noinput
+      python manage.py migrate
+      python manage.py createsuperuser_auto
     startCommand: |
-      python manage.py migrate &&
-      python manage.py createsuperuser --noinput || true &&
       gunicorn university_portal.wsgi:application
     envVars:
       - key: DATABASE_URL
