@@ -43,7 +43,7 @@ class Result(models.Model):
     
     def grade(self):
         percentage = (self.score / self.assessment.max_score) * 100
-        if percentage >= 70:
+        if percentage >= 71:
             return 'A'
         elif percentage >= 60:
             return 'B'
