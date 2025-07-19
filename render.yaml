@@ -7,8 +7,7 @@ services:
       python manage.py collectstatic --noinput
       python manage.py migrate
       python manage.py createsuperuser_auto
-    startCommand: |
-      gunicorn university_portal.wsgi:application
+    startCommand: gunicorn university_portal.wsgi:application
     envVars:
       - key: DATABASE_URL
         fromDatabase:
@@ -17,7 +16,7 @@ services:
       - key: SECRET_KEY
         generateValue: true
       - key: DEBUG
-        value: "0"
+        value: "1"  # Set to "0" for production
       - key: PYTHON_VERSION
         value: "3.11.9"
       - key: DJANGO_SETTINGS_MODULE
@@ -30,9 +29,11 @@ services:
         value: "admin@example.com"
       - key: DJANGO_SUPERUSER_PASSWORD
         value: "adminpass123"
-
     healthCheckPath: "/"
     plan: free
+    disk:
+      name: media
+      mountPath: /opt/render/project/src/media
 
 databases:
   - name: university-portal-db
