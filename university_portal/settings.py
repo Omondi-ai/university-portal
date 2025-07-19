@@ -9,6 +9,7 @@ logging.basicConfig(level=logging.INFO)
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Security
 SECRET_KEY = os.environ['SECRET_KEY']
 DEBUG = os.environ.get('DEBUG', '0') == '1'
 
@@ -25,7 +26,9 @@ if not DEBUG:
     CSRF_COOKIE_SECURE = True
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
+# Applications
 INSTALLED_APPS = [
+    # Django default
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -33,14 +36,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    # Your apps
+    # Local apps
     'accounts',
     'departments',
     'posts',
     'messaging',
     'results',
 
-    # Third-party
+    # Third-party apps
     'crispy_forms',
     'crispy_bootstrap5',
     'django_filters',
@@ -49,9 +52,10 @@ INSTALLED_APPS = [
     'cloudinary_storage',
 ]
 
+# Middleware
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # Must be high in list
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -107,24 +111,24 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-# Static files
+# Static files (CSS, JavaScript, etc.)
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# Media (Cloudinary for prod, fallback local for dev)
+# Media files via Cloudinary
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'duve9arn4',
-    'API_KEY': '947477723725949',
-    'API_SECRET': 'wMluY7sg86Nl5EbkQdFy50HsPcs',
+    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
 }
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-# Custom user model and auth
+# Custom user model and login config
 AUTH_USER_MODEL = 'accounts.User'
 LOGIN_REDIRECT_URL = 'home'
 LOGIN_URL = 'login'
@@ -133,4 +137,8 @@ LOGIN_URL = 'login'
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 
+# Channels
+ASGI_APPLICATION = "university_portal.asgi.application"
+
+# Default primary key field
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
