@@ -19,13 +19,31 @@ def register_view(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST, request.FILES)
         if form.is_valid():
-            user = form.save()
+            user = form.save(commit=False)
+            
+            # Handle department assignment based on role
+            if user.role == User.VISITOR:
+                user.department = None  # Visitors don't have departments
+            elif user.role == User.STUDENT and not user.department:
+                # Set a default department for students if none selected
+                default_dept = Department.objects.first()
+                if default_dept:
+                    user.department = default_dept
+                    messages.info(request, f'You have been assigned to {default_dept.name} department.')
+            
+            user.save()
             login(request, user)
             messages.success(request, 'Account created successfully!')
             return redirect('home')
+        else:
+            messages.error(request, 'Please correct the errors below.')
     else:
         form = UserRegisterForm()
-    return render(request, 'accounts/register.html', {'form': form})
+    
+    return render(request, 'accounts/register.html', {
+        'form': form,
+        'departments': Department.objects.all()
+    })
 
 def login_view(request):
     if request.method == 'POST':
@@ -88,4 +106,3 @@ def application_view(request):
     else:
         form = ApplicationForm()
     return render(request, 'accounts/application.html', {'form': form})
-

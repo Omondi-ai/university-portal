@@ -1,48 +1,213 @@
 {% extends 'base.html' %}
-{% load crispy_forms_tags %}
 
-{% block title %}Create Post{% endblock %}
+{% block title %}Create Post - IVACK University{% endblock %}
+
+{% block extra_css %}
+<style>
+    .form-section {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-left: 4px solid var(--jungle-green);
+    }
+    
+    .form-section h5 {
+        color: var(--jungle-green);
+        margin-bottom: 15px;
+        font-weight: 600;
+    }
+    
+    .conditional-field {
+        transition: all 0.3s ease;
+        overflow: hidden;
+    }
+    
+    .conditional-field.hidden {
+        height: 0;
+        opacity: 0;
+        margin: 0;
+        padding: 0;
+        pointer-events: none;
+    }
+    
+    .file-preview {
+        margin-top: 10px;
+        padding: 10px;
+        border-radius: 8px;
+        background-color: #f8f9fa;
+        border: 1px dashed #dee2e6;
+    }
+    
+    .file-preview img {
+        max-width: 100%;
+        max-height: 200px;
+        border-radius: 8px;
+    }
+</style>
+{% endblock %}
 
 {% block content %}
-<div class="row">
-    <div class="col-md-8 mx-auto">
+<div class="row justify-content-center">
+    <div class="col-md-10 col-lg-8">
         <div class="card">
             <div class="card-header bg-primary text-white">
-                <h2>Create New Post</h2>
+                <h3 class="mb-0"><i class="bi bi-plus-circle me-2"></i> Create New Post</h3>
+                <p class="mb-0">Share information with the university community</p>
             </div>
             <div class="card-body">
-                <form method="post" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    {{ form|crispy }}
-                    <button type="submit" class="btn btn-primary">Post</button>
-                </form>
+                {% if user.role == 'VI' %}
+                    <div class="alert alert-danger">
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-exclamation-triangle-fill me-2 fs-4"></i>
+                            <div>
+                                <h5 class="alert-heading">Access Denied</h5>
+                                <p class="mb-0">Visitors are not allowed to create posts.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="{% url 'post_list' %}" class="btn btn-secondary">
+                        <i class="bi bi-arrow-left me-1"></i> Back to Posts
+                    </a>
+                {% else %}
+                    <form method="POST" enctype="multipart/form-data" id="post-form">
+                        {% csrf_token %}
+                        
+                        <div class="form-section">
+                            <h5><i class="bi bi-text-paragraph me-2"></i> Basic Information</h5>
+                            
+                            <div class="mb-3">
+                                <label for="id_title" class="form-label fw-bold">Title</label>
+                                {{ form.title }}
+                                <div class="form-text">Choose a clear and descriptive title for your post.</div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="id_content" class="form-label fw-bold">Content</label>
+                                {{ form.content }}
+                                <div class="form-text">Share your message with the community.</div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-section">
+                            <h5><i class="bi bi-gear me-2"></i> Post Settings</h5>
+                            
+                            <div class="mb-3">
+                                <label for="target-type-select" class="form-label fw-bold">Post Audience</label>
+                                {{ form.target_type }}
+                                <div class="form-text">Who should see this post?</div>
+                            </div>
+                            
+                            <!-- Department Field (conditionally shown) -->
+                            <div class="mb-3 conditional-field" id="department-field">
+                                <label for="department-select" class="form-label fw-bold">Department</label>
+                                {{ form.department }}
+                                <div class="form-text">Select a department for this post.</div>
+                            </div>
+                            
+                            <!-- Course Field (conditionally shown) -->
+                            <div class="mb-3 conditional-field" id="course-field">
+                                <label for="course-select" class="form-label fw-bold">Course</label>
+                                {{ form.course }}
+                                <div class="form-text">Select a course for this post.</div>
+                            </div>
+                            
+                            <!-- Professor Field (conditionally shown) -->
+                            <div class="mb-3 conditional-field" id="professor-field">
+                                <label for="professor-select" class="form-label fw-bold">Professor</label>
+                                {{ form.professor }}
+                                <div class="form-text">Select a professor for this post.</div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-section">
+                            <h5><i class="bi bi-paperclip me-2"></i> Attachments</h5>
+                            
+                            <div class="mb-3">
+                                <label for="id_file" class="form-label fw-bold">File Attachment</label>
+                                {{ form.file }}
+                                <div class="form-text">Upload a document or other file (optional).</div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="id_image" class="form-label fw-bold">Image Attachment</label>
+                                {{ form.image }}
+                                <div class="form-text">Upload an image (optional).</div>
+                                <div class="file-preview mt-2" id="image-preview"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-primary px-4">
+                                <i class="bi bi-check-circle me-1"></i> Create Post
+                            </button>
+                            <a href="{% url 'post_list' %}" class="btn btn-outline-secondary">
+                                <i class="bi bi-x-circle me-1"></i> Cancel
+                            </a>
+                        </div>
+                    </form>
+                {% endif %}
             </div>
         </div>
     </div>
 </div>
+{% endblock %}
 
 {% block extra_js %}
 <script>
-document.getElementById('id_target_type').addEventListener('change', function() {
-    const targetType = this.value;
-    
-    // Hide all target fields first
-    document.getElementById('div_id_department').style.display = 'none';
-    document.getElementById('div_id_course').style.display = 'none';
-    document.getElementById('div_id_professor').style.display = 'none';
-    
-    // Show the relevant field based on selection
-    if (targetType === 'DE') {
-        document.getElementById('div_id_department').style.display = 'block';
-    } else if (targetType === 'CO') {
-        document.getElementById('div_id_course').style.display = 'block';
-    } else if (targetType === 'PR') {
-        document.getElementById('div_id_professor').style.display = 'block';
-    }
-});
-
-// Trigger change event on page load to set initial state
-document.getElementById('id_target_type').dispatchEvent(new Event('change'));
+    document.addEventListener('DOMContentLoaded', function() {
+        // Function to toggle fields based on target type
+        function togglePostFields() {
+            const targetType = document.getElementById('target-type-select').value;
+            const departmentField = document.getElementById('department-field');
+            const courseField = document.getElementById('course-field');
+            const professorField = document.getElementById('professor-field');
+            
+            // Hide all conditional fields first
+            departmentField.classList.add('hidden');
+            courseField.classList.add('hidden');
+            professorField.classList.add('hidden');
+            
+            // Show relevant field based on selection
+            if (targetType === 'DE') { // Department
+                departmentField.classList.remove('hidden');
+            } else if (targetType === 'CO') { // Course
+                courseField.classList.remove('hidden');
+            } else if (targetType === 'PR') { // Professor
+                professorField.classList.remove('hidden');
+            }
+        }
+        
+        // Initial call to set correct fields
+        togglePostFields();
+        
+        // Add event listener to target type select
+        document.getElementById('target-type-select').addEventListener('change', togglePostFields);
+        
+        // Image preview functionality
+        document.getElementById('id_image').addEventListener('change', function(e) {
+            const preview = document.getElementById('image-preview');
+            preview.innerHTML = '';
+            
+            if (this.files && this.files[0]) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    preview.appendChild(img);
+                }
+                
+                reader.readAsDataURL(this.files[0]);
+            }
+        });
+        
+        // Add animation to form sections
+        const formSections = document.querySelectorAll('.form-section');
+        formSections.forEach((section, index) => {
+            section.style.animationDelay = `${index * 0.1}s`;
+            section.classList.add('animate__animated', 'animate__fadeInUp');
+        });
+    });
 </script>
-{% endblock %}
 {% endblock %}

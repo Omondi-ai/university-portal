@@ -10,6 +10,11 @@ import chardet
 
 @login_required
 def assessment_list(request):
+    # Deny visitors access to results
+    if request.user.role == User.VISITOR:
+        messages.error(request, 'Visitors are not allowed to access results.')
+        return redirect('home')
+    
     if request.user.role == User.PROFESSOR:
         assessments = Assessment.objects.filter(course__department=request.user.department)
     else:
@@ -18,6 +23,11 @@ def assessment_list(request):
 
 @login_required
 def assessment_detail(request, pk):
+    # Deny visitors access to results
+    if request.user.role == User.VISITOR:
+        messages.error(request, 'Visitors are not allowed to access results.')
+        return redirect('home')
+    
     assessment = get_object_or_404(Assessment, pk=pk)
     
     if request.user.role == User.STUDENT:
@@ -32,6 +42,11 @@ def assessment_detail(request, pk):
 
 @login_required
 def create_assessment(request):
+    # Deny visitors access to results
+    if request.user.role == User.VISITOR:
+        messages.error(request, 'Visitors are not allowed to access results.')
+        return redirect('home')
+    
     if request.method == 'POST':
         form = AssessmentForm(request.POST)
         if form.is_valid():
@@ -44,6 +59,11 @@ def create_assessment(request):
 
 @login_required
 def create_result(request, assessment_id):
+    # Deny visitors access to results
+    if request.user.role == User.VISITOR:
+        messages.error(request, 'Visitors are not allowed to access results.')
+        return redirect('home')
+    
     assessment = get_object_or_404(Assessment, pk=assessment_id)
     
     if request.method == 'POST':
@@ -62,9 +82,13 @@ def create_result(request, assessment_id):
         'assessment': assessment
     })
 
-
 @login_required
 def upload_results(request):
+    # Deny visitors access to results
+    if request.user.role == User.VISITOR:
+        messages.error(request, 'Visitors are not allowed to access results.')
+        return redirect('home')
+    
     if request.method == 'POST':
         form = BulkResultUploadForm(request.POST, request.FILES)
         if form.is_valid():

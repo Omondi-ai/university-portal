@@ -46,7 +46,7 @@
                 <div class="list-group">
                     {% for course in courses %}
                         <div class="list-group-item">
-                            <h5>{{ course.code }} - {{ course.name }}</h5>
+                            <h5><a href="{% url 'course_detail' course.pk %}">{{ course.code }} - {{ course.name }}</a></h5>
                             <p>{{ course.description|truncatewords:20 }}</p>
                             {% if course.syllabus %}
                                 <a href="{{ course.syllabus.url }}" class="btn btn-sm btn-outline-secondary">Download Syllabus</a>

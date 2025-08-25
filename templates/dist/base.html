@@ -7,6 +7,7 @@
     <title>IVACK University Portal - {% block title %}{% endblock %}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <style>
         :root {
@@ -15,92 +16,367 @@
             --ivory: #fffff0;
             --dark-slate: #2f4f4f;
             --light-taupe: #d2b48c;
+            --light-green: #e8f5e9;
         }
         
         body {
             background-color: var(--ivory);
             color: var(--dark-slate);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         .navbar {
             background: linear-gradient(135deg, var(--jungle-green) 0%, #0d3b1e 100%) !important;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            padding: 0.8rem 0;
         }
         
         .navbar-brand {
             font-weight: 700;
             display: flex;
             align-items: center;
+            font-size: 1.5rem;
         }
         
         .university-logo {
-            height: 40px;
+            height: 45px;
             margin-right: 12px;
+            border-radius: 8px;
         }
         
         .nav-link {
             font-weight: 500;
             padding: 8px 16px;
-            border-radius: 4px;
+            border-radius: 6px;
             transition: all 0.3s ease;
+            margin: 0 2px;
         }
         
         .nav-link:hover {
-            background-color: rgba(255, 255, 255, 0.1);
+            background-color: rgba(255, 255, 255, 0.15);
             color: var(--golden-yellow) !important;
+            transform: translateY(-2px);
         }
         
         .btn-primary {
-            background-color: var(--jungle-green);
-            border-color: var(--jungle-green);
+            background: linear-gradient(135deg, var(--jungle-green) 0%, #0d3b1e 100%);
+            border: none;
+            border-radius: 6px;
+            padding: 8px 20px;
+            transition: all 0.3s ease;
         }
         
         .btn-primary:hover {
-            background-color: #134621;
-            border-color: #134621;
+            background: linear-gradient(135deg, #134621 0%, #0a2914 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
         
         .btn-outline-light:hover {
             color: var(--jungle-green) !important;
+            background-color: var(--light-green);
         }
         
         .dropdown-menu {
             background-color: var(--dark-slate);
             border: none;
+            border-radius: 8px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
         }
         
         .dropdown-item {
             color: var(--ivory);
+            padding: 10px 15px;
+            transition: all 0.2s ease;
+            border-radius: 4px;
+            margin: 2px 5px;
         }
         
         .dropdown-item:hover {
             background-color: var(--jungle-green);
             color: var(--golden-yellow);
+            transform: translateX(5px);
         }
         
         footer {
             background: linear-gradient(135deg, var(--dark-slate) 0%, #1a3a3a 100%);
             border-top: 4px solid var(--golden-yellow);
+            margin-top: 3rem;
         }
         
         .card {
             border: none;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            transition: transform 0.3s ease;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
         }
         
         .card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.15);
         }
         
         .card-header {
             background: linear-gradient(135deg, var(--jungle-green) 0%, #0d3b1e 100%);
             color: white;
-            border-radius: 8px 8px 0 0 !important;
+            border-radius: 12px 12px 0 0 !important;
+            padding: 15px 20px;
+            font-weight: 600;
         }
         
         .alert {
+            border-radius: 10px;
+            border: none;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .text-golden {
+            color: var(--golden-yellow) !important;
+        }
+        
+        .bg-light-taupe {
+            background-color: var(--light-taupe);
+        }
+        
+        .department-header {
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+        
+        .list-group-item {
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border: 1px solid rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+        
+        .list-group-item:hover {
+            background-color: #f8f9fa;
+            transform: translateX(5px);
+        }
+        
+        .badge {
+            font-weight: 500;
+            padding: 6px 10px;
+            border-radius: 20px;
+        }
+        
+        /* Animation classes */
+        .fade-in {
+            animation: fadeIn 0.6s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .hover-lift {
+            transition: transform 0.3s ease;
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-3px);
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--jungle-green);
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #0d3b1e;
+        }
+        
+        /* Message bubbles */
+        .message-bubble {
+            max-width: 70%;
+            border-radius: 18px;
+            padding: 12px 16px;
+            margin-bottom: 12px;
+            position: relative;
+        }
+        
+        .message-sent {
+            background: linear-gradient(135deg, var(--jungle-green) 0%, #0d3b1e 100%);
+            color: white;
+            margin-left: auto;
+            border-bottom-right-radius: 4px;
+        }
+        
+        .message-received {
+            background-color: #f1f1f1;
+            margin-right: auto;
+            border-bottom-left-radius: 4px;
+        }
+        
+        /* Profile images */
+        .profile-img-sm {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        /* Course cards */
+        .course-card {
+            transition: all 0.3s ease;
+        }
+        
+        .course-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 12px 20px rgba(0,0,0,0.15);
+        }
+        
+        /* Results table */
+        .results-table {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .results-table th {
+            background: linear-gradient(135deg, var(--jungle-green) 0%, #0d3b1e 100%);
+            color: white;
+        }
+        
+        /* Enhanced Form Styling */
+        .form-control {
+            border-radius: 8px;
+            padding: 12px 15px;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--jungle-green);
+            box-shadow: 0 0 0 0.25rem rgba(26, 95, 42, 0.25);
+        }
+
+        .form-label {
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: var(--dark-slate);
+        }
+
+        .form-text {
+            font-size: 0.85rem;
+            color: #6c757d;
+        }
+
+        .form-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--jungle-green);
+        }
+
+        /* Custom file input styling */
+        .custom-file-input {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+        }
+
+        .custom-file-input input[type="file"] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+        }
+
+        .custom-file-label {
+            display: block;
+            padding: 10px 15px;
+            background-color: #f8f9fa;
+            border: 2px dashed #dee2e6;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .custom-file-label:hover {
+            background-color: #e9ecef;
+            border-color: var(--jungle-green);
+        }
+
+        /* Enhanced select dropdowns */
+        select.form-control {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 16px 12px;
+            padding-right: 40px;
+        }
+
+        /* Checkbox and radio button styling */
+        .form-check-input {
+            width: 1.2em;
+            height: 1.2em;
+            margin-top: 0.15em;
+        }
+
+        .form-check-input:checked {
+            background-color: var(--jungle-green);
+            border-color: var(--jungle-green);
+        }
+
+        /* Animation for form elements */
+        .form-control, .btn, .card {
+            transition: all 0.3s ease;
+        }
+
+        .form-control:hover {
+            border-color: #adb5bd;
+        }
+
+        /* Required field indicators */
+        .required-field::after {
+            content: "*";
+            color: #dc3545;
+            margin-left: 4px;
+        }
+        
+        /* Conditional field animation */
+        .conditional-field {
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+        
+        .conditional-field.hidden {
+            height: 0;
+            opacity: 0;
+            margin: 0;
+            padding: 0;
+            pointer-events: none;
+        }
+        
+        .file-preview {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+            border: 1px dashed #dee2e6;
+        }
+        
+        .file-preview img {
+            max-width: 100%;
+            max-height: 200px;
             border-radius: 8px;
         }
     </style>
@@ -110,7 +386,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
             <a class="navbar-brand" href="{% url 'home' %}">
-                <img src="{% static 'images/university_logo.jpeg' %}" alt="" class="university-logo">
+                <img src="{% static 'images/university_logo.jpeg' %}" alt="IVACK University Logo" class="university-logo">
                 IVACK University
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -127,7 +403,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'post_list' %}"><i class="bi bi-newspaper me-1"></i> Posts</a>
                     </li>
-                    {% if user.is_authenticated %}
+                    {% if user.is_authenticated and user.role != 'VI' %}
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'inbox' %}"><i class="bi bi-envelope me-1"></i> Messages</a>
                         </li>
@@ -141,14 +417,30 @@
                         <div class="dropdown">
                             <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false">
                                 {% if user.profile_picture %}
-                                    <img src="{{ user.profile_picture.url }}" alt="Profile" width="32" height="32" class="rounded-circle me-2">
+                                    <img src="{{ user.profile_picture.url }}" alt="Profile" class="profile-img-sm me-2">
                                 {% else %}
-                                    <i class="bi bi-person-circle fs-4 me-2"></i>
+                                    <div class="bg-light rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 40px; height: 40px;">
+                                        <i class="bi bi-person-fill text-dark"></i>
+                                    </div>
                                 {% endif %}
-                                <strong>{{ user.username }}</strong>
+                                <div class="d-flex flex-column">
+                                    <strong>{{ user.username }}</strong>
+                                    <small>
+                                        {% if user.role == 'ST' %}
+                                            <span class="badge bg-info">Student</span>
+                                        {% elif user.role == 'PR' %}
+                                            <span class="badge bg-warning">Professor</span>
+                                        {% elif user.role == 'VI' %}
+                                            <span class="badge bg-secondary">Visitor</span>
+                                        {% endif %}
+                                    </small>
+                                </div>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser">
                                 <li><a class="dropdown-item" href="{% url 'profile' %}"><i class="bi bi-person me-1"></i> Profile</a></li>
+                                {% if user.role == 'VI' %}
+                                    <li><a class="dropdown-item" href="{% url 'application' %}"><i class="bi bi-pencil-square me-1"></i> Apply for Admission</a></li>
+                                {% endif %}
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="{% url 'logout' %}"><i class="bi bi-box-arrow-right me-1"></i> Sign out</a></li>
                             </ul>
@@ -162,11 +454,11 @@
         </div>
     </nav>
 
-    <div class="container mt-4">
+    <div class="container mt-4 fade-in">
         {% if messages %}
             {% for message in messages %}
                 <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-                    <i class="bi {% if message.tags == 'success' %}bi-check-circle{% else %}bi-exclamation-triangle{% endif %} me-2"></i>
+                    <i class="bi {% if message.tags == 'success' %}bi-check-circle{% elif message.tags == 'error' %}bi-exclamation-triangle{% elif message.tags == 'warning' %}bi-exclamation-triangle{% else %}bi-info-circle{% endif %} me-2"></i>
                     {{ message }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
@@ -182,19 +474,22 @@
                 <div class="col-md-4 mb-4 mb-md-0">
                     <h5 class="text-golden">IVACK University</h5>
                     <p>Excellence in education since 1906</p>
-                    <img src="{% static 'images/university_logo.jpeg' %}" alt="" style="height: 60px;">
+                    <img src="{% static 'images/university_logo.jpeg' %}" alt="IVACK University Logo" style="height: 60px; border-radius: 8px;">
                 </div>
                 <div class="col-md-4 mb-4 mb-md-0">
                     <h5 class="text-golden">Quick Links</h5>
                     <ul class="list-unstyled">
-                        <li><a href="{% url 'home' %}" class="text-white">Home</a></li>
-                        <li><a href="{% url 'department_list' %}" class="text-white">Departments</a></li>
-                        <li><a href="{% url 'post_list' %}" class="text-white">News & Announcements</a></li>
+                        <li><a href="{% url 'home' %}" class="text-white hover-lift d-inline-block">Home</a></li>
+                        <li><a href="{% url 'department_list' %}" class="text-white hover-lift d-inline-block">Departments</a></li>
+                        <li><a href="{% url 'post_list' %}" class="text-white hover-lift d-inline-block">News & Announcements</a></li>
+                        {% if not user.is_authenticated or user.role == 'VI' %}
+                            <li><a href="{% url 'application' %}" class="text-white hover-lift d-inline-block">Apply for Admission</a></li>
+                        {% endif %}
                     </ul>
                 </div>
                 <div class="col-md-4">
                     <h5 class="text-golden">Contact Us</h5>
-                    <address>
+                    <address class="mt-3">
                         <i class="bi bi-geo-alt"></i> Nairobi<br>
                         <i class="bi bi-telephone"></i> (254) 745-2106<br>
                         <i class="bi bi-envelope"></i> odhiamboderrickomondi020@gmail.com
@@ -209,6 +504,89 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Add animations and interactive elements
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add hover effects to cards
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                card.classList.add('hover-lift');
+            });
+            
+            // Add animation to list items
+            const listItems = document.querySelectorAll('.list-group-item');
+            listItems.forEach((item, index) => {
+                item.style.animationDelay = `${index * 0.1}s`;
+                item.classList.add('fade-in');
+            });
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+            
+            // Auto-dismiss alerts after 5 seconds
+            const alerts = document.querySelectorAll('.alert');
+            alerts.forEach(alert => {
+                setTimeout(() => {
+                    const bsAlert = new bootstrap.Alert(alert);
+                    bsAlert.close();
+                }, 5000);
+            });
+            
+            // Enhanced form validation
+            const forms = document.querySelectorAll('.needs-validation');
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+            
+            // Image preview functionality for all file inputs
+            document.querySelectorAll('input[type="file"]').forEach(input => {
+                if (input.accept && input.accept.includes('image')) {
+                    input.addEventListener('change', function(e) {
+                        const previewId = this.id + '-preview';
+                        let preview = document.getElementById(previewId);
+                        
+                        if (!preview) {
+                            preview = document.createElement('div');
+                            preview.id = previewId;
+                            preview.className = 'file-preview mt-2';
+                            this.parentNode.appendChild(preview);
+                        }
+                        
+                        preview.innerHTML = '';
+                        
+                        if (this.files && this.files[0]) {
+                            const reader = new FileReader();
+                            
+                            reader.onload = function(e) {
+                                const img = document.createElement('img');
+                                img.src = e.target.result;
+                                preview.appendChild(img);
+                            }
+                            
+                            reader.readAsDataURL(this.files[0]);
+                        }
+                    });
+                }
+            });
+        });
+    </script>
     {% block extra_js %}{% endblock %}
 </body>
 </html>

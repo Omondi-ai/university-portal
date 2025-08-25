@@ -4,16 +4,35 @@ from .models import Thread, Message
 from .forms import MessageForm, NewThreadForm
 from django.contrib.auth import get_user_model
 from django.db.models import Q
+from django.contrib import messages
 
 User = get_user_model()
 
 @login_required
 def inbox(request):
+    # Deny visitors access to messaging
+    if request.user.role == User.VISITOR:
+        messages.error(request, 'Visitors are not allowed to access messaging.')
+        return redirect('home')
+    
     threads = Thread.objects.filter(participants=request.user).order_by('-updated')
+    
+    # Add unread counts to each thread
+    for thread in threads:
+        thread.unread_count = Message.objects.filter(
+            thread=thread, 
+            is_read=False
+        ).exclude(sender=request.user).count()
+    
     return render(request, 'messaging/inbox.html', {'threads': threads})
 
 @login_required
 def thread_detail(request, thread_id):
+    # Deny visitors access to messaging
+    if request.user.role == User.VISITOR:
+        messages.error(request, 'Visitors are not allowed to access messaging.')
+        return redirect('home')
+    
     thread = get_object_or_404(Thread, id=thread_id, participants=request.user)
     
     if request.method == 'POST':
@@ -31,18 +50,23 @@ def thread_detail(request, thread_id):
     else:
         form = MessageForm()
     
-    messages = thread.message_set.all().order_by('created')
+    messages_list = thread.message_set.all().order_by('created')
     other_user = thread.participants.exclude(id=request.user.id).first()
     
     return render(request, 'messaging/chat.html', {
         'thread': thread,
-        'messages': messages,
+        'messages': messages_list,
         'other_user': other_user,
         'form': form,
     })
 
 @login_required
 def new_thread(request):
+    # Deny visitors access to messaging
+    if request.user.role == User.VISITOR:
+        messages.error(request, 'Visitors are not allowed to access messaging.')
+        return redirect('home')
+    
     if request.method == 'POST':
         form = NewThreadForm(request.POST, user=request.user)
         if form.is_valid():

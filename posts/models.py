@@ -27,8 +27,9 @@ class Post(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE, null=True, blank=True)
     professor = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True, 
                                  related_name='targeted_posts')
-    file = models.FileField(upload_to='post_files/', null=True, blank=True)
-    image = models.ImageField(upload_to='post_images/', null=True, blank=True)
+    # Increase max_length for file and image fields
+    file = models.FileField(upload_to='post_files/', null=True, blank=True, max_length=500)
+    image = models.ImageField(upload_to='post_images/', null=True, blank=True, max_length=500)
     
     def __str__(self):
         return self.title
